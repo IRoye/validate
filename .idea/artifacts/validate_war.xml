@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="validate:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="validate.war">
+      <element id="artifact" artifact-name="validate:war exploded" />
+    </root>
+  </artifact>
+</component>
