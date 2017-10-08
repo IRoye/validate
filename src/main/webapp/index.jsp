@@ -17,8 +17,13 @@
             border: 1px solid #FF5722!important
         }
         .disable{
-            cursor: none;
+            cursor: default;
             color: #f2f2f2;
+        }
+        .warn{
+            color: #999999;
+            font-size: 10px;
+            font-weight: 300;
         }
     </style>
 </head>
@@ -29,6 +34,15 @@
         <label class="layui-form-label">手机号码</label>
         <div class="layui-input-inline" style="width: 250px;">
             <input type="text" maxlength="11" name="phone" id="phone" required lay-verify="phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">验证码</label>
+        <div class="layui-input-inline" style="position: relative;width: 250px;">
+            <input type="imgcodeinput" name="imgcodeinput" id="imgcodeinput" maxlength="4" required lay-verify="required" placeholder="验证码" autocomplete="off"
+                   class="layui-input" style="width: 60%;">
+            <img src="captchaImage" id="imgcode" class="layui-btn" style="padding:0;font-weight: 300;background-color: #f2f2f2;color: #666;position: absolute;top:0;right: 0;width: 40%;" onclick="changeCode()"></img>
+            <i class="warn">看不清？请点击图片更换验证码</i>
         </div>
     </div>
     <div class="layui-form-item">
@@ -55,6 +69,7 @@
         });
 
         $("#getPhoneCode").on('click', function (e) {
+
             var value = $("#phone").val();
             // 非空校验
             var reg1 = /^\s*$/g;
@@ -64,28 +79,71 @@
                 $("#phone").addClass('error');
                 layer.msg('请输入正确的手机号格式', { icon: 5 });
             }else{
-                $.ajax({
-                    type : "POST",
-                    url : "sendSMS",
-                    data : {phone: value},
-                    dataType: "json",
-                    success: function(data, textStatus){
 
+                // 获取手机验证码之前必须要获取图形验证码, 并且必须图形验证码验证成功；
+                var imgCode = $("#imgcodeinput").val();
+                var imgCodeReg = /^[0-9A-Za-z]{4}$/;
+                if(reg1.test(imgCode) || !imgCodeReg.test(imgCode)){
+                    $("#imgcodeinput").addClass('error');
+                    layer.msg('请输入验证码123', { icon: 5 });
+                }
+                //server 的校验
+                var flag = false;
+                $.ajax({
+
+                    type : "POST",
+                    async:false,// 改为同步调用， 才可以修改全局的值
+                    url : "checkCaptchaImage",
+                    data : {imgCode: imgCode},
+                    dataType: "json",
+                    success: function (data, textStatus) {
                         if(data.code == 0){
-                            // 按钮显示
-                            console.log("in");
-                            updateButton();
+                            flag = true;
                         }else{
-                            layer.msg('短信发送失败，请稍后重试', { icon: 5 });
+                            flag = false;
+                            $("#imgcodeinput").addClass('error');
                         }
                     },
                     error: function(){
-                        layer.msg('短信发送失败，请稍后重试', { icon: 5 });
+                        flag = false;
                     }
+
                 });
+                if(flag){
+                    $.ajax({
+                        type : "POST",
+                        url : "sendSMS",
+                        data : {phone: value},
+                        dataType: "json",
+                        success: function(data, textStatus){
+
+                            if(data.code == 0){
+                                // 按钮显示
+                                updateButton();
+                            }else{
+                                layer.msg('短信发送失败，请稍后重试', { icon: 5 });
+                            }
+                        },
+                        error: function(){
+                            layer.msg('短信发送失败，请稍后重试', { icon: 5 });
+                        }
+                    });
+                }else{
+                    layer.msg('图片验证码不正确或者已经过期', { icon: 5 });
+                }
             }
         });
     });
+
+    // 点击切换验证码
+    function changeCode(event) {
+
+        //用淡入的效果来显示隐藏的元素
+        $('#imgcode').hide().attr('src', 'captchaImage?' + Math.floor(Math.random()*100) ).fadeIn();
+        event=event?event:window.event;
+        event.stopPropagation();
+    }
+
     var countdown = 120;
     function updateButton(){
         var getPhoneCode = $("#getPhoneCode");

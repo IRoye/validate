@@ -8,6 +8,13 @@
   <name>validate Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
+
+    <!-- https://mvnrepository.com/artifact/com.google.code.kaptcha/kaptcha -->
+    <dependency>
+      <groupId>com.github.penggle</groupId>
+      <artifactId>kaptcha</artifactId>
+      <version>2.3.2</version>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>

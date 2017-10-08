@@ -19,6 +19,7 @@
     http://www.springframework.org/schema/util/spring-util.xsd">
 
     <context:annotation-config/>
+    <!--  图形验证码的配置  -->
     <!-- 加载db.properties 中的内容 -->
    <!-- <context:property-placeholder location="classpath:db.properties" />-->
     

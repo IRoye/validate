@@ -18,6 +18,33 @@
             http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
             http://www.springframework.org/schema/context
             http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+    <!-- 这个是放在springMVC.XML 中的， 要是放在其他的地方的话， 那么会包  no beans found -->
+    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.google.code.kaptcha.util.Config">
+                <constructor-arg>
+                    <props>
+                        <prop key="kaptcha.border">no</prop>
+                        <prop key="kaptcha.border.color">105,179,90</prop>
+                        <prop key="kaptcha.textproducer.font.color">blue</prop>
+                        <prop key="kaptcha.image.width">80</prop>
+                        <prop key="kaptcha.image.height">38</prop>
+                        <prop key="kaptcha.textproducer.font.size">27</prop>
+                        <prop key="kaptcha.session.key">code</prop>
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                        <prop key="kaptcha.textproducer.char.space">3</prop>
+                        <prop key="kaptcha.textproducer.font.names">Arial,Arial Narrow,Serif,Helvetica,Tahoma,Times New Roman,Verdana</prop>
+                        <prop key="kaptcha.textproducer.char.string">123456789ABCEdefhiklmno</prop>
+                        <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.WaterRipple</prop>
+                        <prop key="kaptcha.noise.color">white</prop>
+                        <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>
+                        <prop key="kaptcha.background.clear.from">white</prop>
+                        <prop key="kaptcha.background.clear.to">white</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
     <context:annotation-config/>
     <mvc:annotation-driven>
         <mvc:message-converters register-defaults="false">
