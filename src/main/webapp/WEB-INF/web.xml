@@ -5,6 +5,9 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  <listener>
+    <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+  </listener>
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:applicationContext.xml</param-value>
@@ -26,6 +29,9 @@
   </servlet-mapping>
 
   <filter>
+    <!-- 默认情况下是取这个 filter-name的（没有指定一个targetBeanName的话）， 所以，会去 applicationcontext中 查找对应的
+    <bean id="shiroFilter">
+    -->
     <filter-name>shiroFilter</filter-name>
     <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     <init-param>
@@ -33,7 +39,9 @@
       <param-value>true</param-value>
     </init-param>
   </filter>
-
+  <!-- 用来到spring 容器中去找与filter-name 相同名字的bean实例, 这个bean 实例有可能不是
+    shrio， 有可能是其他的安全框架， 这个是一个前端的入口。
+   -->
   <filter-mapping>
     <filter-name>shiroFilter</filter-name>
     <url-pattern>/*</url-pattern>
