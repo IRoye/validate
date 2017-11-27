@@ -11,6 +11,17 @@
     <title>Title</title>
 </head>
 <body>
-login page
+<%--
+302 Found 请求的时候发生了302状态码
+
+--%>
+<form action="logon">
+    username : <input type="text" name="username"/>
+    <br>
+    pass: <input type="text" name="pass"/>
+    <input type="submit" value="login">
+</form>
+
+
 </body>
 </html>

@@ -79,10 +79,23 @@
          配置哪些页面需要保护， 以及访问这些页面需要的权限
          1. anon：可以被匿名访问
          2. authc: 必须被认证后才能被访问。
+
+
+         url 的匹配模式：
+         使用的是anT 风格的；
+           ？ 匹配的是一个字符，
+           * 匹配的是零个或者是多个字符；
+           ** 匹配路径中的零个或者是多个路径；
+
+          url 的匹配顺序：
+          使用的是第一次匹配优先的方式；
+
+          表单的提交也是会拦截的；
         -->
         <property name="filterChainDefinitions">
             <value>
                 /favicon.ico = anon
+                /jsp/logon = anon
                 /logo.png = anon
                 /shiro.css = anon
                 /jsp/login.jsp = anon
