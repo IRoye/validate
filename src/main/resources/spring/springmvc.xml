@@ -64,8 +64,10 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
     <context:component-scan base-package="com.roye.dao"/>
-    <context:component-scan base-package="com.roye.pojo"/>
+    <context:component-scan base-package="com.roye.domain"/>
     <context:component-scan base-package="com.roye.service"/>
+    <context:component-scan base-package="com.roye.serviceImpl"/>
+    <context:component-scan base-package="com.roye.mapper"/>
     
     <context:annotation-config/>
     <context:spring-configured/>
@@ -77,4 +79,5 @@
     <!-- 静态资源访问 -->
     <mvc:resources location="/statics/js/" mapping="/js/**"/>
     <mvc:resources location="/statics/layui/" mapping="/layui/**"></mvc:resources>
+
 </beans>

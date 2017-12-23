@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="validate" />
+        <module name="zdal" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="validate" target="1.5" />
+      <module name="zdal" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

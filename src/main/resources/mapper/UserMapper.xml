@@ -1,0 +1,19 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.roye.mapper.UserMapper">
+    <resultMap type="com.roye.domain.User" id="user">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="userpass" property="userpass"/>
+    </resultMap>
+    <select id="getUserById" resultMap="user">
+        select * from user
+        <where>
+            <if test="userid != null">
+                id = #{userid}
+            </if>
+        </where>
+    </select>
+</mapper>

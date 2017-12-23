@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/validate.iml" filepath="$PROJECT_DIR$/validate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zdal/zdal.iml" filepath="$PROJECT_DIR$/zdal/zdal.iml" />
     </modules>
   </component>
 </project>
